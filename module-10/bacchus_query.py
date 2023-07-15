@@ -21,7 +21,7 @@ try:
     cursor = db.cursor()
 
     # employee query
-    cursor.execute("SELECT employee_ID, employee_firstName, employee_lastName, employee_department, employee_hours FROM employee")
+    cursor.execute("SELECT employee_id, employee_firstName, employee_lastName, employee_address_one, employee_city, employee_state, employee_postal, employee_phone, employee_email, employee_department FROM employee")
 
     employees = cursor.fetchall()
 
@@ -30,8 +30,10 @@ try:
     for employee in employees:
         print("Employee ID: {}".format(employee[0]))
         print("Employee Name: {} {}".format(employee[1], employee[2]))
-        print("Employee Department: {}".format(employee[3]))
-        print("Employee Hours: {}\n".format(employee[4]))
+        print("Employee Address: {}, {}, {} {}".format(employee[3], employee[4], employee[5], employee[6]))
+        print("Employee Phone: {}".format(employee[7]))
+        print("Employee Email: {}".format(employee[8]))
+        print("Employee Department: {}\n".format(employee[9]))  
 
     # supplier query
     cursor.execute("SELECT supplier_ID, supplier_name FROM supplier")
@@ -43,6 +45,18 @@ try:
     for supplier in suppliers:
         print("Supplier ID: {}".format(supplier[0]))
         print("Supplier Name: {}\n".format(supplier[1]))
+except mysql.connector.Error as err:
+    if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
+        print(" The supplied username or password are invalid")
+
+    elif err.errno == errorcode.ER_BAD_DB_ERROR:
+        print(" The specified database does not exist")
+
+    else:
+        print(err)
+
+'''
+
 
     # supply query
     cursor.execute("SELECT supply_ID, supply_name, supply_quantity FROM supply")
@@ -90,13 +104,4 @@ try:
     for distributor in distributors:
         print("distributor ID: {}".format(distributor[0]))
         print("distributor Name: {}\n".format(distributor[1]))
-    
-except mysql.connector.Error as err:
-    if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
-        print(" The supplied username or password are invalid")
-
-    elif err.errno == errorcode.ER_BAD_DB_ERROR:
-        print(" The specified database does not exist")
-
-    else:
-        print(err)
+''' 
